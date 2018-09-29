@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    h1 !{title}
+
+    form(method="POST", action="")
+        p
+            label(for="title") Title:
+            input(type="text", id="title", name="title", placeholder="Name of book", value=(book === undefined ? "" : book.title))
+        p
+            label(for="author") Author:
+            select(id="author", name="author")
+                for author in authors
+                    if book
+                        option(value=author._id selected=(author._id.toString() == book.author._id || author._id.toString() == book.author ? true : false)) #{author.name}
+                    else
+                        option(value=author._id) #{author.name}
+        p
+            label(for="summary") Summary:
+            input(type="text", id="summary", name="summary", value=(book === undefined ? "" : book.summary))
+        p
+            label(for='isbn') ISBN:
+            input#isbn(type='text', placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn))
+        p
+            //type, name, value, checked
+            for genre in genres
+                - console.log(genre.name + ": " + genre.checked)
+                input(type="checkbox", name="genre", id=genre._id, value=genre._id, checked=genre.checked)
+                label(for=genre._id) #{genre.name} 
+        p
+            button(type="submit") submit
+        
+    if errors
+        ul
+            for error in errors
+                li !{error.msg}

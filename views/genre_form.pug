@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method="POST", action="")
+    label(for="name") Genre:
+    input(id="name", name="name", type="text", placeholder="da placeholder", value=(genre === undefined ? "" : genre.name))
+    input(type="submit")
+
+  if errors
+    ul
+      for error in errors
+        li !{error.msg}
